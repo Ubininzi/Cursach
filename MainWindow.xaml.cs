@@ -15,6 +15,12 @@ using System.Windows.Shapes;
 
 namespace cursach
 {
+    class Question
+    {
+        public Question() { }
+        string QuestionText;
+
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
