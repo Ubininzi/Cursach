@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ScrollViewer>
+            <!--<StackPanel Orientation="Vertical" >-->
+                <Button x:Name="btn1" Height="50" Width="200" Content="создать файл" Click="btn1_Click"/>
+            <!--</StackPanel>-->
+        </ScrollViewer>
     </Grid>
+
 </Window>
