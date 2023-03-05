@@ -12,78 +12,65 @@ using Newtonsoft.Json;
 
 namespace workWithTestAndFiles
 {
-    class Test
+    struct Test
     {
-        public string nameOfTest;
+        public string testName;
         public List<Question> questions;
-        public Test(string name, List<Question> questions)
-        {
-            this.nameOfTest = name;
-            this.questions = questions;
-        }
     }
-    class Question
+    struct Question
     {
         public string questionName;
         public List<string> options;
         public List<string> rightAnswers;
-        public Question(string questionName, List<string> answers, List<string> rightAnswers)
-        {
-            this.questionName = questionName;
-            this.options = answers;
-            this.rightAnswers = rightAnswers;
-        }
     }
     class WorkWithTestAndFiles
     {
-        //public static void createJsonFromTestClass(Test testObj)
-        //{
-        //    string json = JsonConvert.SerializeObject(testObj);
-        //    if (!File.Exists("D:\\amalgama.json"))
-        //        File.Create("D:\\amalgama.json");
-        //    File.WriteAllText("D:\\amalgama.json", json);
-        //}
-        public static Test createTestClassFromJson(string path)
+        private static List<Test> createListOfTestsFromLocalDirectory()
         {
-            string json = File.ReadAllText(path);
-            Test testobj = JsonConvert.DeserializeObject<Test>(json);
-            return testobj;
-        }
-        public static TreeView convertTestClassToTreeView(Test testClassObj)
-        {
-            TreeView treeViewObj = new TreeView();
-            TreeViewItem testTreeViewItem = new TreeViewItem();
-            testTreeViewItem.Header = testClassObj.nameOfTest;
-            foreach(Question que in testClassObj.questions)
-            {
-                TreeViewItem optionsTreeView = new TreeViewItem();
-                optionsTreeView.Header = "Варианты";
-                foreach(string option in que.options)
+            string[] allTestFiles = Directory.GetFiles("C:\\Users\\Максим\\AppData\\Local\\Ubininzi", "*.json");
+            List<Test> listOfTests = new List<Test>();
+            if (allTestFiles != null) {
+                foreach (string testFilePath in allTestFiles)
                 {
-                    optionsTreeView.Items.Add(option);
+                    string jsonText = File.ReadAllText(testFilePath);
+                    listOfTests.Add(JsonConvert.DeserializeObject<Test>(jsonText));
                 }
-
-                TreeViewItem rightAnswersTreeView = new TreeViewItem();
-                rightAnswersTreeView.Header = "Правильные варианты";
-                foreach (string rightAnswer in que.rightAnswers)
-                {
-                    rightAnswersTreeView.Items.Add(rightAnswer);
-                }
-
-                TreeViewItem questionTreeViewItem = new TreeViewItem();
-                questionTreeViewItem.Header = que.questionName;
-                questionTreeViewItem.Items.Add(optionsTreeView);
-                questionTreeViewItem.Items.Add(rightAnswersTreeView);
-
-                testTreeViewItem.Items.Add(questionTreeViewItem);
             }
-
-            treeViewObj.Items.Add(testTreeViewItem);
-            treeViewObj.Height = 300;
-            treeViewObj.Width = 200;
-            return treeViewObj;
+            return listOfTests;
         }
+        public static StackPanel createVisualPresentationOfTests()
+        {
+            List<Test> listOfTests = createListOfTestsFromLocalDirectory();
+            StackPanel testPanel = new StackPanel();
+            foreach(Test test in listOfTests)
+            {
+                StackPanel questionsPanel = new StackPanel(); 
+                TextBlock testName = new TextBlock();
+                testName.FontSize = 25;
+                testName.Text = test.testName;
+                foreach(Question question in test.questions)
+                {
+                    TextBlock questionName = new TextBlock();
+                    questionName.Text = question.questionName;
+                    questionName.FontSize = 15;
+                    questionsPanel.Children.Add(questionName);
 
-
+                    StackPanel optionsPanel = new StackPanel();
+                    optionsPanel.Orientation = Orientation.Horizontal;
+                    foreach(string option in question.options)
+                    {
+                        RadioButton answer = new RadioButton();
+                        answer.Content = option;
+                        answer.Margin = new System.Windows.Thickness(5);
+                        optionsPanel.Children.Add(answer);
+                    }
+                    optionsPanel.Margin = new System.Windows.Thickness(10);
+                    questionsPanel.Children.Add(optionsPanel);
+                }
+                testPanel.Children.Add(testName);
+                testPanel.Children.Add(questionsPanel);
+            }
+            return testPanel;
+        }
     }
 }
