@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:cursach"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600">
-    <Grid>
-        <ScrollViewer x:Name="ScrollViewer1">
+    
+    <Grid >
+        <ScrollViewer x:Name="ScrollViewer1" >
             <StackPanel x:Name="StackPanel1" >
                 
             </StackPanel>

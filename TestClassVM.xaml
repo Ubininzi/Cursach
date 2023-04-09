@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="cursach.TestClassVM"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:cursach"
+             mc:Ignorable="d" 
+             d:DesignHeight="90" d:DesignWidth="1000">
+    <Border BorderThickness="2.5" BorderBrush="Black" Margin="2.5">
+        <Grid Background="#50f2d4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" x:Name="TestName" FontSize="25" FontFamily="Consolas" Margin="5"/>
+            <Button Grid.Column="1" x:Name="BeginButton" Content="Приступить" FontSize="25" FontFamily="Consolas" Margin="5" Click="BeginButton_Click"/>
+        </Grid>
+    </Border>
+</UserControl>
