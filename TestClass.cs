@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
 
-namespace TestLogic
+namespace cursach
 {
-    internal struct Test
+    public struct Test
     {
         public string testName;
         public string time;
         public List<Question> questions;
         public Dictionary<int, int> marks;
     }
-    internal struct Question
+    public struct Question
     {
         public string questionName;
         public List<string> options;
@@ -20,7 +21,7 @@ namespace TestLogic
     }
     class TestClass
     {
-        internal static List<Test> createListOfTestsFromLocalDirectory()
+        internal static List<Test> CreateListOfTestsFromLocalDirectory()
         {
             string[] ListOfPathToTests = Directory.GetFiles("C:\\Users\\Максим\\AppData\\Local\\Ubininzi", "*.json");
             List<Test> listOfTests = new List<Test>();

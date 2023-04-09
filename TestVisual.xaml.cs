@@ -18,17 +18,16 @@ namespace cursach
     /// <summary>
     /// Логика взаимодействия для TestClassVM.xaml
     /// </summary>
-    public partial class TestClassVM : UserControl
+    public partial class TestClassVisual : UserControl
     {
-        public TestClassVM()
+        public TestClassVisual()
         {
             InitializeComponent();
         }
-
-
         private void BeginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            TestWindow testWindowObj = new TestWindow((Test)((Control)sender).Tag);
+            testWindowObj.Show();
         }
     }
 }
