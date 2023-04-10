@@ -7,19 +7,32 @@
         mc:Ignorable="d"
         Title="TestWindow" Height="450" Width="800">
     <Grid>
-        <ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name ="UpperPanel" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" x:Name="TestName" FontSize="25" />
+            <TextBlock Grid.Column="1" x:Name="TimeBlock" FontSize="25" HorizontalAlignment="Right" Margin="0,0,30,0"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="MainPanel" Orientation="Vertical" >
                 <StackPanel x:Name="QuestionsPanel"/>
-                <StackPanel x:Name="Confirm" Orientation="Horizontal">
-                    <Label Content="Имя" Margin="5"/>
-                    <TextBox Width="150" Margin="5"/>
-                    <Label Content="Фамилия" Margin="5"/>
-                    <TextBox Width="150" Margin="5"/>
-                    <Label Content="Группа" Margin="5"/>
-                    <TextBox Width="100" Margin="5"/>
-                    <Button Content="Сonfirm" Width="150" Margin="15,5,5,5"/>
-                </StackPanel>
             </StackPanel>
         </ScrollViewer>
+        <StackPanel x:Name="ConfirmPanel" Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Имя" Margin="5"/>
+            <TextBox Width="150" Margin="5"/>
+            <Label Content="Фамилия" Margin="5"/>
+            <TextBox Width="150" Margin="5"/>
+            <Label Content="Группа" Margin="5"/>
+            <TextBox Width="100" Margin="5"/>
+            <Button x:Name="Confirm" Content="Сonfirm" Width="150" Margin="15,5,5,5" Click="Confirm_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
