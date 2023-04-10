@@ -26,12 +26,12 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel x:Name="ConfirmPanel" Orientation="Horizontal" Grid.Row="2">
-            <Label Content="Имя" Margin="5"/>
-            <TextBox Width="150" Margin="5"/>
             <Label Content="Фамилия" Margin="5"/>
-            <TextBox Width="150" Margin="5"/>
+            <TextBox x:Name="Surname" Width="150" Margin="5"/>
+            <Label Content="Имя" Margin="5"/>
+            <TextBox x:Name="Name" Width="150" Margin="5"/>
             <Label Content="Группа" Margin="5"/>
-            <TextBox Width="100" Margin="5"/>
+            <TextBox x:Name="GroupName" Width="100" Margin="5"/>
             <Button x:Name="Confirm" Content="Сonfirm" Width="150" Margin="15,5,5,5" Click="Confirm_Click"/>
         </StackPanel>
     </Grid>
