@@ -13,6 +13,11 @@ namespace cursach
 		private Dictionary<string, string> RightAnswers = new();
 		private Dictionary<int, int> marks;
 
+		private bool CanAcceptAnswers = true;
+
+        DispatcherTimer TestTimer = new DispatcherTimer();
+        private DateTime StartTime; 
+		private TimeSpan TimeToEnd;
 
 		public TestWindow(Test testObj)
 		{
@@ -21,23 +26,30 @@ namespace cursach
 			TimeBlock.Text = testObj.time;
 			marks = testObj.marks;
 			QuestionsPanel.Children.Add(CreateVisualOfQuestions(testObj));
+			string[] splittedTime = testObj.time.Split(':');
+			TimeSpan TestTime = new(Convert.ToInt32(splittedTime[0]), Convert.ToInt32(splittedTime[1]), 5 /*Convert.ToInt32(splittedTime[2])*/);
+			StartTime = DateTime.Now;
 
-			
-			//DispatcherTimer TestTimer = new DispatcherTimer();
-			//TestTimer.Tick += new EventHandler(TestTimer_Tick);
-			//TestTimer.Interval = new TimeSpan(0, 0, 1);
-			//TestTimer.Start();
+			TestTimer.Interval = TimeSpan.FromMilliseconds(5);
+			TestTimer.Start();
+			TestTimer.Tick += delegate
+			{
+				TimeToEnd = TestTime.Subtract(DateTime.Now.Subtract(StartTime));
+				TimeBlock.Text = TimeToEnd.Hours.ToString()+":"+ TimeToEnd.Minutes.ToString()+":"+ TimeToEnd.Seconds.ToString();
+				if (TimeToEnd.TotalMilliseconds <= 30) {
+                    TestTimer.Stop();
+                    MessageBox.Show("Пожалуйста введите фамилию, имя, группу и подтвердите завершение теста, введенные ответы более не учитываются","Время вышло!",MessageBoxButton.OK,MessageBoxImage.Warning);
+					CanAcceptAnswers = false;
+				}
+			};
 		}
-		//private void TestTimer_Tick(object sender, EventArgs e)
-		//{
-		//	// Updating the Label which displays the current second
-		//	//TimeBlock.Text
 
-		//	// Forcing the CommandManager to raise the RequerySuggested event
-		//	CommandManager.InvalidateRequerySuggested();
-		//}
+        private void TestWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TestTimer.Stop();
+        }
 
-		private StackPanel CreateVisualOfQuestions(Test test)					
+        private StackPanel CreateVisualOfQuestions(Test test)					
 		{
 			StackPanel questionsPanel = new();
 			foreach (Question question in test.questions)
@@ -56,13 +68,16 @@ namespace cursach
 					que.OptionsPanel.Children.Add(answer);
 				}
 				questionsPanel.Children.Add(que);
-
-				RightAnswers.Add(question.questionName, question.rightAnswers[0]);
-
+				RightAnswers.Add(question.questionName, question.rightAnswer);
 			}
 			return questionsPanel;
 		}
-		private int AcceptAnswers() {
+
+		private void AcceptAnswers() {
+			TestClass.CreateNewRecordOfCompletedTest(Surname.Text, Name.Text, GroupName.Text, TestName.Text, Rating());
+		}
+
+		private int Rating() {
 			int points = 0;
 			foreach (string Answer in answers.Keys)
 			{
@@ -74,21 +89,22 @@ namespace cursach
 			{
 				if (points >= marks[mark])
 				{
-					MessageBox.Show(mark.ToString(),"Ваша оценка");		//ДОБАВИТЬ ЗАКРЫТИЕ ОКНА ПОСЛЕ ЗАКРЫТИЯ МЕСЕДЖБОКСА
 					return mark;
 				}
 			}
-			MessageBox.Show("2","Ваша оценка");
 			return 2;
 		}
 		private void Answer_Checked(object sender, RoutedEventArgs e)				
 		{
-			answers.Remove(((RadioButton)sender).GroupName);
-			answers.Add(((RadioButton)sender).GroupName,((RadioButton)sender).Content.ToString());
+			if (CanAcceptAnswers)
+			{
+				answers.Remove(((RadioButton)sender).GroupName);
+				answers.Add(((RadioButton)sender).GroupName,((RadioButton)sender).Content.ToString());
+			}
 		}
 		private void Confirm_Click(object sender, RoutedEventArgs e)
 		{
-			TestClass.CreateNewRecordOfCompletedTest(Surname.Text,Name.Text,GroupName.Text, TestName.Text, AcceptAnswers());
+			AcceptAnswers();
 		}
-	}
+    }
 }
