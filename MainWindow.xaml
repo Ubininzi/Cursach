@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:cursach"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600">
+        Title="Выбор теста" Height="900" Width="1600">
     
-    <Grid >
+    <Grid Background="White">
         <ScrollViewer x:Name="ScrollViewer1" >
             <StackPanel x:Name="StackPanel1" >
                 

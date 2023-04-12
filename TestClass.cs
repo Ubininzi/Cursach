@@ -79,7 +79,6 @@ namespace cursach
 			File.WriteAllLines(path + "/Results.csv", results, System.Text.Encoding.UTF8);
 			MessageBoxResult messageBoxResult = new();
 			MessageBox.Show(mark.ToString(), "Ваша оценка", MessageBoxButton.OK, MessageBoxImage.Information, messageBoxResult);
-            Application.Current.Shutdown();
         }
     }
 }

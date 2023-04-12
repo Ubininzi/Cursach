@@ -4,16 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cursach"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="90" d:DesignWidth="1000">
-    <Border BorderThickness="2.5" BorderBrush="Black" Margin="2.5" Background="#50f2d4" CornerRadius="10" ClipToBounds="True" >
+    <Border BorderThickness="2.5" BorderBrush="Black" Margin="2.5" Background="#FFA0A0A0" CornerRadius="10" ClipToBounds="True" >
         <Grid Background="Transparent" ClipToBounds="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.8*"/>
                 <ColumnDefinition Width="0.2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" x:Name="TestName" FontSize="25" FontFamily="Consolas" Margin="5" Grid.ColumnSpan="2"/>
-            <Button Grid.Column="2" x:Name="BeginButton" FontSize="25" FontFamily="Consolas" Margin="5" Click="BeginButton_Click" Content="Приступить"/>
+            <Button Grid.Column="2" x:Name="BeginButton" FontSize="25" FontFamily="Consolas" Margin="5" Click="BeginButton_Click" Content="Приступить" Background="White"/>
         </Grid>
     </Border>
 </UserControl>

@@ -27,7 +27,7 @@ namespace cursach
 			marks = testObj.marks;
 			QuestionsPanel.Children.Add(CreateVisualOfQuestions(testObj));
 			string[] splittedTime = testObj.time.Split(':');
-			TimeSpan TestTime = new(Convert.ToInt32(splittedTime[0]), Convert.ToInt32(splittedTime[1]), 5 /*Convert.ToInt32(splittedTime[2])*/);
+			TimeSpan TestTime = new(Convert.ToInt32(splittedTime[0]), Convert.ToInt32(splittedTime[1]), Convert.ToInt32(splittedTime[2]));
 			StartTime = DateTime.Now;
 
 			TestTimer.Interval = TimeSpan.FromMilliseconds(5);
@@ -74,6 +74,7 @@ namespace cursach
 		}
 
 		private void AcceptAnswers() {
+			this.Close();
 			TestClass.CreateNewRecordOfCompletedTest(Surname.Text, Name.Text, GroupName.Text, TestName.Text, Rating());
 		}
 

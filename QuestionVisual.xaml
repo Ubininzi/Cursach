@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:cursach"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="AliceBlue" Margin="5">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="QuestionName" FontSize="20"/>
-        <StackPanel Grid.Row="1" x:Name="OptionsPanel" Orientation="Horizontal"/>
+        <TextBlock Grid.Row="0" x:Name="QuestionName" FontSize="20" Background="#FF9C9C9C"/>
+        <StackPanel Grid.Row="1" x:Name="OptionsPanel" Orientation="Horizontal" Background="#FFB9B9B9"/>
     </Grid>
 </UserControl>
