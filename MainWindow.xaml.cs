@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using System.IO;
 using System.Windows.Controls;
-using System.Windows.Media;
-using cursach;
-using System.Windows.Shapes;
 
 namespace cursach
 {
