@@ -18,10 +18,10 @@ namespace cursach
         private DateTime StartTime; 
 		private TimeSpan TimeToEnd;
 
-		public TestWindow(Test testObj)
+		public TestWindow(TestStruct testObj)
 		{
 			InitializeComponent();
-			TestName.Text = testObj.testName;
+			TestName.Text = testObj.TestName;
 			TimeBlock.Text = testObj.time;
 			marks = testObj.marks;
 			QuestionsPanel.Children.Add(CreateVisualOfQuestions(testObj));
@@ -48,7 +48,7 @@ namespace cursach
             TestTimer.Stop();
         }
 
-        private StackPanel CreateVisualOfQuestions(Test test)					
+        private StackPanel CreateVisualOfQuestions(TestStruct test)					
 		{
 			StackPanel questionsPanel = new();
 			foreach (Question question in test.questions)

@@ -14,7 +14,7 @@ namespace cursach
         }
         private void BeginButton_Click(object sender, RoutedEventArgs e)
         {
-            TestWindow testWindowObj = new TestWindow((Test)((Control)sender).Tag);
+            TestWindow testWindowObj = new TestWindow((TestStruct)((Control)sender).Tag);
             testWindowObj.Show();
         }
     }

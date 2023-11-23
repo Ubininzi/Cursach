@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="0.2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" x:Name="TestName" FontSize="25" FontFamily="Consolas" Margin="5" Grid.ColumnSpan="2"/>
-            <Button Grid.Column="2" x:Name="BeginButton" FontSize="25" FontFamily="Consolas" Margin="5" Click="BeginButton_Click" Content="Приступить" Background="White"/>
+            <Button Grid.Column="2" x:Name="BeginButton" FontSize="25" FontFamily="Consolas" Margin="5" Click="BeginButton_Click" Content="Начать" Background="White"/>
         </Grid>
     </Border>
 </UserControl>

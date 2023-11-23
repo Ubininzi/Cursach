@@ -13,13 +13,13 @@ namespace cursach
         }
         private StackPanel CreateVisualOfTests()
         {
-            List<Test> listOfTests = TestClass.CreateListOfTestsFromLocalDirectory();
+            List<TestStruct> listOfTests = TestClass.CreateListOfTestsFromLocalDirectory();
             StackPanel testsPanel = new StackPanel();
 
-            foreach (Test test in listOfTests)
+            foreach (TestStruct test in listOfTests)
             {
                 TestClassVisual TestObj = new TestClassVisual();
-                TestObj.TestName.Text = test.testName;
+                TestObj.TestName.Text = test.TestName;
                 TestObj.BeginButton.Tag = test;
                 testsPanel.Children.Add(TestObj);
             }

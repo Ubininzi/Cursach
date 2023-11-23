@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -8,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace cursach
 {
-	public struct Test
+	public struct TestStruct
 	{
-		public string testName;
+		public string TestName;
 		public string time;
 		public Dictionary<int, int> marks;
 		public List<Question> questions;
@@ -23,62 +22,35 @@ namespace cursach
 	}
 	class TestClass
 	{
-        static string path = "C:/ProgramFiles/Ubininzi";
-        internal static List<Test> CreateListOfTestsFromLocalDirectory()
+		static string path = "C:/ProgramFiles/Ubininzi";
+		internal static List<TestStruct> CreateListOfTestsFromLocalDirectory()
 		{
-            Directory.CreateDirectory(path);
+			Directory.CreateDirectory(path);
 			if (Directory.GetFiles(path).Length != 0) {
 				string[] ListOfPathToTests = Directory.GetFiles(path,"*.json");
-				List<Test> listOfTests = new List<Test>();
+				List<TestStruct> listOfTests = new List<TestStruct>();
 				if (ListOfPathToTests != null)
 				{
 					foreach (string testFilePath in ListOfPathToTests)
 					{
 						string jsonText = File.ReadAllText(testFilePath);
-						listOfTests.Add(JsonConvert.DeserializeObject<Test>(jsonText));
+						listOfTests.Add(JsonConvert.DeserializeObject<TestStruct>(jsonText));
 					}
 				}
 				return listOfTests;
 			}
-            return new List<Test>();
-        }
+			return new List<TestStruct>();
+		}
 		internal static void CreateNewRecordOfCompletedTest(string surname, string name, string group, string testName, int mark)
 		{
-            if (!File.Exists(path + "/Results.csv"))
-				File.AppendAllText((path + "/Results.csv"), "Фамилия,Имя,Группа");
-
-			List<string> results = File.ReadAllLines(path + "/Results.csv", System.Text.Encoding.UTF8).ToList();
-			if (!results[0].Contains(testName))
-			{
-				results[0] += "," + testName;
-			}
-			int IndexOfTest = Array.IndexOf(results[0].Split(','), testName);
-
-			bool IsRecordExists = false;
-			for (int i = 0; i < results.Count; i++)
-			{
-				List<string> SplittedRecord = results[i].Split(',').ToList();
-				if (SplittedRecord[0] == surname && SplittedRecord[1] == name && SplittedRecord[2] == group)
-				{
-					for (int j = 3; j < IndexOfTest; j++)
-					{
-						if (SplittedRecord[j] == null)
-							SplittedRecord.Add(" ");
-					}
-					SplittedRecord.Add(mark.ToString());
-					results[i] = String.Join(',', SplittedRecord);
-					IsRecordExists = true;
-				}
-			}
-
-			if (!IsRecordExists)
-			{
-				results.Add(surname + ',' + name + ',' + group + ',' + (new string(',', IndexOfTest - 3)) + mark.ToString());
-			}
-
-			File.WriteAllLines(path + "/Results.csv", results, System.Text.Encoding.UTF8);
+			TestsDbContext db = new TestsDbContext();
+			Student ThisStudent = db.Students.First(x => x.Name == name && x.Surname == surname && x.Group == group);//проверки на существование студента и теста
+			Test ThisTest = db.Tests.First(x => x.Name == testName);
+            Testresult testresult = new Testresult() {StudentId = ThisStudent.Id,TestId = ThisTest.Id,Mark = mark };
+			db.Testresults.Add(testresult);
 			MessageBoxResult messageBoxResult = new();
 			MessageBox.Show(mark.ToString(), "Ваша оценка", MessageBoxButton.OK, MessageBoxImage.Information, messageBoxResult);
-        }
-    }
+			db.SaveChanges();
+		}
+	}
 }
